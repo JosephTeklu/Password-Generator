@@ -34,26 +34,26 @@ function generatePasswordAllTypes(){
     // call the getLetter() function to get a letter
     var currentLetter = getLetter();
 
-    // if the user chose to exclude certain characters
-    // while(lowerCase === false | upperCase === false | numbers === false | specialChars === false)
-    // {
-    if(currentLetter.charCodeAt() >= 97 & currentLetter.charCodeAt() <= 122 & !lowerCase)
+    checkLowerCase: if(currentLetter.charCodeAt() >= 97 & currentLetter.charCodeAt() <= 122 & !lowerCase)
     {
       currentLetter = getLetter();
+      break checkLowerCase;
+    }
+    
+
+    checkUpperCase: if(currentLetter.charCodeAt() >= 65 & currentLetter.charCodeAt() <= 90 & !upperCase){
+      break checkUpperCase;
     }
 
-    if(currentLetter.charCodeAt() >= 65 & currentLetter.charCodeAt() <= 90 & !upperCase){
-      currentLetter = getLetter();
+    checkNUmber: if(currentLetter.charCodeAt() >= 48 & currentLetter.charCodeAt() >= 57 & !numbers){
+      break checkNUmber;
     }
 
-    if(currentLetter.charCodeAt() >= 48 & currentLetter.charCodeAt() >= 57 & !numbers){
-      currentLetter = getLetter();
+    checkSpecialChar: if(currentLetter.charCodeAt() >= 32 & currentLetter.charCodeAt() >= 47 & !specialChars){
+      break checkSpecialChar;
     }
-
-    if(currentLetter.charCodeAt() >= 32 & currentLetter.charCodeAt() >= 47 & !specialChars){
-      currentLetter = getLetter();
-    }
-
+    
+    password+=currentLetter;
   }
 
   // return the password
