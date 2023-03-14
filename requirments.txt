@@ -1,0 +1,9 @@
+when you click the button to generate a password
+	- present series of prompts for password criteria
+	- allow user to have password 8-128 characters
+	- allow user to have one or more of (lowercase, uppercase, numeric, or special characters)
+	- generate psswd form given criteria and display or write to page
+
+have 
+	- readme
+	- commented out code
