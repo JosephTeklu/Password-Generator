@@ -6,7 +6,7 @@ This website generates a password from 8-128 characters. It allows the user to p
 
 ![scrrenshot](./images/Password-Generator.png)
 
-## Link to webpage: josephteklu.github.io/Password-Generator
+## Link to webpage: [josephteklu.github.io/Password-Generator](https://josephteklu.github.io/Password-Generator/)
 
 ## Created by Joseph Teklu
 
