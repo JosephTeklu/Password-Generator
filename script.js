@@ -3,77 +3,89 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePasswordAllTypes();
+  // call password to generate the new password
+  var password = generatePassword();
 
+  // get the password id and put it in passwordText
   var passwordText = document.querySelector("#password");
 
+  // set the generated password to the id to showcase
   passwordText.value = password;
-
 }
 
-// this function will generate a password if the user selects to have all options in the password (lowercase, uppercase, numeric, specialCharacters)
-function generatePasswordAllTypes(){
-  // ask the user to pick a length for the password from 8-128, if the pick outside of the range, reprompt
-  do{
-    var length = prompt("Pick a length from 8 - 128");
-  }while(length < 8 | length > 128);
+function generatePassword()
+{
+  // prompt user to pick a number between 8-128 for the password length
+  var length = prompt("PLEASE PICK A PASSWORD LENGTH FROM 8-128");
+  // reprompt and show alert message if length is not between 8-128
+  while(length <8 || length > 128)
+  {
+    // show alert
+    alert("PICK A NUMBER BETWEEN 8-128 FOR THE PASSWORD LENGTH");
+    // ask the user how many characters they want in the password
+    length = prompt("PLEASE PICK A PASSWORD LENGTH FROM 8-128");
+  }
 
-  // ask the user how they want to generate the password and repeat prompts until they have picked at least one option
-  do{
-    var lowerCase = confirm("Do you want to add lower case characters to the password?");
-    var upperCase = confirm("Do you want to add upper case characters to the password?");
-    var numbers = confirm("Do you want to add numbers to the password?");
-    var specialChars = confirm("Do you want to add special characters to the password?");
-  }while(!lowerCase & !upperCase & !specialChars & !numbers);
-  
-  // create a variable to hold password
-  var password = "";
+  // declaring variables needed
+  var lowerCase = false; var upperCase = false; var numbers = false; var specChar = false;
+  var arr = [];
 
-  // loop through the length of the password the user choose
-  for (let i = 0; i < length; i++) {
-    // call the getLetter() function to get a letter
-    var currentLetter = getLetter();
-
-    checkLowerCase: if(currentLetter.charCodeAt() >= 97 & currentLetter.charCodeAt() <= 122 & !lowerCase)
+  // if the user doses not pick at lease one option the prompts will replay
+  while(!lowerCase & !upperCase & !numbers & !specChar)
+  {
+    // confirm if user wants to include lowercase characters
+    lowerCase = confirm("WOULD YOU LIKE TO ADD LOWERCASE LETTERS TO YOUR PASSWORD?");
+    // if the user chooses to include lowercase characters
+    if(lowerCase)
     {
-      currentLetter = getLetter();
-      break checkLowerCase;
-    }
-    
-
-    checkUpperCase: if(currentLetter.charCodeAt() >= 65 & currentLetter.charCodeAt() <= 90 & !upperCase){
-      break checkUpperCase;
+      // fill the array with lowercase characters using their char chode
+      for (let i = 97; i < 123; i++) {arr.push(String.fromCharCode(i));}
     }
 
-    checkNUmber: if(currentLetter.charCodeAt() >= 48 & currentLetter.charCodeAt() >= 57 & !numbers){
-      break checkNUmber;
+    // confirm if the user wants to include uppercase characters
+    upperCase = confirm("WOULD YOU LIKE TO ADD UPPERCASE LETTERS TO YOUR PASSWORD?");
+    // if the user chooses to include lowercase characters
+    if(upperCase)
+    {
+      // fill the array with uppercase characters using their char code
+      for (let i = 65; i < 91; i++) {arr.push(String.fromCharCode(i));}
     }
 
-    checkSpecialChar: if(currentLetter.charCodeAt() >= 32 & currentLetter.charCodeAt() >= 47 & !specialChars){
-      break checkSpecialChar;
+    // confirm if the user wants to include numbers 
+    numbers = confirm("WOULD YOU LIKE TO ADD NUMBERS TO YOUR PASSWORD?");
+    // if the user chooses to include numbers
+    if(numbers)
+    {
+      // fill the array with numbers using their char code
+      for (let i = 48; i < 58; i++) {arr.push(String.fromCharCode(i));}
     }
-    
-    password+=currentLetter;
+
+    // confirm if the user wants to include special characters 
+    specChar = confirm("WOULD YOU LIKE TO ADD SPECIAL CHARACTERS TO YOUR PASSWORD?");
+    // if the user chooses to include characters 
+    if(specChar)
+    {
+      // fill the array with characters using their char code
+      for (let i = 33; i < 48; i++) {arr.push(String.fromCharCode(i));}
+      for (let i = 58; i < 65; i++) {arr.push(String.fromCharCode(i));}
+      for (let i = 91; i < 97; i++) {arr.push(String.fromCharCode(i));}
+      for (let i = 123; i < 127; i++) {arr.push(String.fromCharCode(i));}
+    }
+
+    // show alert if no option has been picked before reprompting
+    if(!lowerCase & !upperCase & !numbers & !specChar){
+      alert("YOU MUST SELECT AT LEAST ONE OPTION TO GENERATE A PASSWORD");
+    }
   }
 
-  // return the password
+  // loop through the length of the password 
+  var password = "";
+  for (let i = 0; i < length; i++) 
+  {
+      // and populate by picking a random number which will become the index of the character to use form the array
+    password += arr[Math.floor(Math.random()*arr.length)];
+  }
   return password;
-}
-
-function getLetter(){
-  var randomNumber = Math.floor(Math.random() * (126-32) + 32);
-  return String.fromCharCode(randomNumber);
-}
-
-function holder(){
-  // loop through what would be the length of the password
-  for (var i = 0; i < length; i++) {
-    // generate a random number that is a whole number from 32-126 which is the range of unicode values of all special/lowercase/uppercase/numeric characters
-    var randomNumber = Math.floor(Math.random() * (126-32) + 32);
-
-    // populate the password by getting the character from the randomly generated unicode
-    password += String.fromCharCode(randomNumber);
-  }
 }
 
 // Add event listener to generate button
